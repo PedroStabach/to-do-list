@@ -1,4 +1,4 @@
-import { FaCalendarCheck } from "react-icons/fa";
+import { FaCalendarCheck, FaCheckCircle } from "react-icons/fa";
 import { useState } from "react";
 import styles from "./index.module.css";
 
@@ -31,7 +31,8 @@ export function Account () {
     }
     return (
         <>
-            <div className={styles.container}>
+            <div className={styles.AccountArea}>
+                <div className={styles.container}>
                 <h1>MyTasks</h1>
                 <h2>Organize seu dia, conquiste seus objetivos.</h2>
                 <FaCalendarCheck className={styles.FaCalendarCheck} size={150}/>
@@ -41,8 +42,16 @@ export function Account () {
                     <button type="submit">Entrar</button>
                     <button className={styles.CriarConta}>Criar Conta</button>
                     <h3>Esqueci minha senha</h3>
+                    {error && <div className={styles.error}>{error}</div>}
                 </form>
+                </div>
+                <div className={styles.container}>
+                    <FaCheckCircle size={150} color="#344c64"/>
+                    <h1>Stay Organized</h1>
+                    <span>Lorem ipsum, dolor sit amet consectetur adipisicing elit.</span>
+                </div>
             </div>
+            
         </>
     )
 }

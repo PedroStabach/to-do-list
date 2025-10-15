@@ -45,6 +45,12 @@ h3 {
   color: #6B7280;
   font-weight: lighter;
 }
+span {
+  font-size: 1.2em;
+  color: #454a55;
+  font-weight: lighter;
+  line-height: 1.2;
+}
 button {
   border-radius: 8px;
   border: 1px solid transparent;

@@ -1,11 +1,21 @@
+.AccountArea {
+    display: flex;
+}
 .container {
+    padding: 20px;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     width: 400px;
 }
-
+.container:nth-child(2) {
+    background-color: #12273c;
+    height: 100vh;
+    color: #ffffff;
+    padding: 0 20px;
+    text-align: center;
+}   
 .FaCalendarCheck {
     color: #344c64;
     margin-bottom: 10px;
@@ -42,6 +52,10 @@ form button {
     margin-top: 10px;
     font-weight: bolder;
 }
+form input:focus {
+    outline: none;
+    border: none;
+}
 form .CriarConta {
     background-color: #2a2954;
     border: .5px solid #2a2954;
@@ -56,4 +70,17 @@ form .CriarConta {
 .container h3 {
     margin-top: 20px;
     cursor: pointer;
+}
+
+@media (min-width : 1280px) {
+    .container:nth-child(2) {
+        max-height: 700px;
+        border-radius: 0px 20px 20px 0px;
+    }
+}
+
+@media (max-width : 900px) {
+    .container:nth-child(2) {
+        display: none;
+    }
 }
