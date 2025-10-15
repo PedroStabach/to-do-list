@@ -1,8 +1,19 @@
 .Header {
-    position: absolute;
-    top: 0px;
-    left: 0px;
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;                 /* garante que ocupe toda a largura */
+  display: flex;
+  justify-content: space-between;
+  text-align: center;
+  padding: 10px;
+  height: 60px;
+  border-bottom: 1px solid #2a2d57;
+}
+.Header h1 {
+    margin: 0;
+    padding: 0;
+}
+.Header .FiIcon {
+    margin-top: 15px;
 }
