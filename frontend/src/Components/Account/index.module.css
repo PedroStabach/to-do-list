@@ -1,0 +1,59 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 400px;
+}
+
+.FaCalendarCheck {
+    color: #344c64;
+    margin-bottom: 10px;
+}
+form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 20px;
+}
+form input {
+    width: 100%;
+    margin-bottom: 10px;
+    height: 50px;
+    border: .5px solid #323337;
+    color: #3e4248;
+    border-radius: 5px;
+    font-size: 16px;
+    background-color: #000000;
+    border-radius: 10px;
+}
+form button {
+    width: 100%;
+    height: 50px;
+    border: .5px solid #646cff;
+    color: #ffffff;
+    padding: 0 10px;
+    font-size: 18px;
+    background-color: #646cff;
+    border-radius: 10px;
+    margin-top: 10px;
+    font-weight: bolder;
+}
+form .CriarConta {
+    background-color: #2a2954;
+    border: .5px solid #2a2954;
+    color: #5c64ff;
+}
+.container h1 {
+    margin-bottom: 10px;
+}
+.container h2 {
+    margin-bottom: 50px;
+}
+.container h3 {
+    margin-top: 20px;
+    cursor: pointer;
+}

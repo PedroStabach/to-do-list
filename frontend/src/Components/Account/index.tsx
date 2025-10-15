@@ -1,6 +1,5 @@
 import { FaCalendarCheck } from "react-icons/fa";
 import { useState } from "react";
-import "./index.css";
 import styles from "./index.module.css";
 
 export function Account () {
@@ -35,13 +34,12 @@ export function Account () {
             <div className={styles.container}>
                 <h1>MyTasks</h1>
                 <h2>Organize seu dia, conquiste seus objetivos.</h2>
-                
+                <FaCalendarCheck className={styles.FaCalendarCheck} size={150}/>
                 <form onSubmit={handleSubmit}>
                     <input type="text" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} required/>
                     <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} required/>
-                    <FaCalendarCheck />
                     <button type="submit">Entrar</button>
-                    <button>Criar Conta</button>
+                    <button className={styles.CriarConta}>Criar Conta</button>
                     <h3>Esqueci minha senha</h3>
                 </form>
             </div>
