@@ -13,7 +13,7 @@ export function Account () {
         setError("");
 
         try {
-            const response = await fetch("auth/login", {
+            const response = await fetch("/auth/login", {
                 method: "POST",
                 headers: {"Content-Type" : "application/json"},
                 body: JSON.stringify({email, password})
@@ -40,7 +40,7 @@ export function Account () {
                     <input type="text" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} required/>
                     <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} required/>
                     <button type="submit">Entrar</button>
-                    <button className={styles.CriarConta}>Criar Conta</button>
+                    <button type="button" className={styles.CriarConta}>Criar Conta</button>
                     <h3>Esqueci minha senha</h3>
                     {error && <div className={styles.error}>{error}</div>}
                 </form>

@@ -5,9 +5,24 @@
   width: 100vw;
   height: 100vh;
   display: flex;
+  /* changed: alinhar o formulário no canto direito */
   justify-content: center;
   align-items: center;
   text-align: start;
+  z-index: 1000;
+  pointer-events: auto;
+
+  /* overlay blur e escurecimento do fundo */
+  /* o pseudo-element cobre toda a tela e fica abaixo do form (form z-index > overlay) */
+}
+.wrapper::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.35);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  z-index: 1000; /* deve ficar abaixo do form (form tem z-index:1001) */
 }
 
 .form {
@@ -19,7 +34,16 @@
   display: flex;
   flex-direction: column;
   gap: 15px;
+  position: relative;
+  z-index: 1001;
+
+  /* ajustes para painel no canto direito */
+  margin-right: 20px; /* distância do canto */
+  max-height: 90vh;
+  overflow-y: auto;
+  padding-top: 44px; /* mantém espaço para o X */
 }
+
 .form label {
   text-align: start;
   width: 100%;
@@ -27,29 +51,32 @@
 
 .title {
   width: 100%;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-bottom: 10px;
+  text-align: center;
+  margin: 0;
   font-size: 1.5rem;
   color: #fff;
-  justify-content: center;
 
 }
-.title svg {
-  position: absolute;
-  justify-content: center;
-  align-items: center;
-  margin-right: 350px;
-  color: #fff;
-}
+
+/* botão de fechar posicionado no canto superior esquerdo do form */
 
 
 input,
-select {
+select, textarea {
   height: 40px;
   background-color: #393939;
   font-size: 1rem;
+  border-radius: 3px;
+  padding: 5px;
+  border: none;
+  position: relative;
+  z-index: 1002;
+}
+input:focus,
+textarea:focus,
+select:focus {
+  outline: 2px solid #2d8cff;
+  outline-offset: 2px;
 }
 
 .wrapper button {
@@ -64,8 +91,24 @@ select {
   font-weight: bold;
   cursor: pointer;
   transition: 0.2s;
+  background-color: #2d8cff;
 }
-
+.closeButton {
+  position: absolute;
+  top: 30px;
+  left: 10px; /* moved to left */
+  right: auto;
+  background: transparent;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  padding: 6px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1005;
+  background-color: #101115;
+}
 
 .error {
   color: red;
