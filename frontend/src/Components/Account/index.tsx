@@ -1,7 +1,9 @@
 import { FaCalendarCheck, FaCheckCircle } from "react-icons/fa";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import styles from "./index.module.css";
 
+const navigate = useNavigate();
 export function Account () {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -25,6 +27,7 @@ export function Account () {
             }
             const data = await response.json();
             localStorage.setItem('token', data.token);
+            navigate("/");
         } catch (e : any) {
             setError(e.message);
         }

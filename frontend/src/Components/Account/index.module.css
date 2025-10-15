@@ -82,7 +82,120 @@ form .CriarConta {
     }
 }
 
-@media (max-width : 900px) {
+@media (max-width : 900px) {/* Container principal */
+.AccountArea {
+    display: flex;
+    flex-direction: row;
+    height: 100vh; /* ocupa toda a altura da tela */
+    width: 100%;
+    overflow: hidden;
+}
+
+/* Primeiro container (formulário) */
+.container:nth-child(1) {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    background-color: #f8f9fa; /* fundo claro para visibilidade */
+    color: #000;
+}
+
+/* Segundo container (informativo) */
+.container:nth-child(2) {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: #12273c;
+    color: #ffffff;
+    padding: 20px;
+    text-align: center;
+}
+
+/* Ícones */
+.FaCalendarCheck {
+    color: #344c64;
+    margin-bottom: 10px;
+}
+
+/* Formulário */
+form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+/* Inputs */
+.AccountArea form input {
+    width: 100%;
+    height: 50px;
+    border: 0.5px solid #323337;
+    border-radius: 10px;
+    padding: 0 10px;
+    font-size: 16px;
+    background-color: #ffffff;
+    color: #000000;
+    box-sizing: border-box;
+}
+
+form input:focus {
+    outline: none;
+    border-color: #646cff;
+}
+
+/* Botões */
+form button {
+    width: 100%;
+    height: 50px;
+    border: 0.5px solid #646cff;
+    color: #ffffff;
+    background-color: #646cff;
+    border-radius: 10px;
+    font-size: 18px;
+    font-weight: bold;
+    margin-top: 10px;
+    cursor: pointer;
+}
+
+/* Botão "Criar Conta" */
+form .CriarConta {
+    background-color: #2a2954;
+    border: 0.5px solid #2a2954;
+    color: #5c64ff;
+}
+
+/* Títulos */
+.container h1 {
+    margin-bottom: 10px;
+}
+.container h2 {
+    margin-bottom: 50px;
+}
+.container h3 {
+    margin-top: 20px;
+    cursor: pointer;
+}
+
+/* Responsivo */
+@media (max-width: 900px) {
+    .AccountArea {
+        flex-direction: column;
+    }
+    .container:nth-child(2) {
+        display: none; /* esconde o container informativo em telas pequenas */
+    }
+    .AccountArea form {
+        padding: 0 12px;
+    }
+}
+
     .container:nth-child(2) {
         display: none;
     }
