@@ -48,7 +48,7 @@ export function Account () {
                 </div>
                 <div className={styles.container}>
                     <FaCheckCircle size={150} color="#344c64"/>
-                    <h1>Stay Organized</h1>
+                    <h1>Fique organizado </h1>
                     <span>Lorem ipsum, dolor sit amet consectetur adipisicing elit.</span>
                 </div>
             </div>
