@@ -44,6 +44,7 @@ export function Account () {
                     <h3>Esqueci minha senha</h3>
                     {error && <div className={styles.error}>{error}</div>}
                 </form>
+                
                 </div>
                 <div className={styles.container}>
                     <FaCheckCircle size={150} color="#344c64"/>
