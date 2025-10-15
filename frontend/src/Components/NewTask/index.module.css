@@ -2,7 +2,7 @@
   position: fixed;
   top: 0;
   left: 0;
-  width: 100vw;
+  width: 100%; /* avoid horizontal overflow on mobile */
   height: 100vh;
   display: flex;
   /* changed: alinhar o formulário no canto direito */
@@ -11,6 +11,10 @@
   text-align: start;
   z-index: 1000;
   pointer-events: auto;
+
+  /* prevent page horizontal scroll and ensure paddings are counted */
+  overflow-x: hidden;
+  box-sizing: border-box;
 
   /* overlay blur e escurecimento do fundo */
   /* o pseudo-element cobre toda a tela e fica abaixo do form (form z-index > overlay) */
@@ -31,6 +35,7 @@
   border-radius: 10px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   width: 350px;
+  max-width: calc(100% - 40px); /* garante espaço lateral em telas pequenas */
   display: flex;
   flex-direction: column;
   gap: 15px;
@@ -42,6 +47,7 @@
   max-height: 90vh;
   overflow-y: auto;
   padding-top: 44px; /* mantém espaço para o X */
+  box-sizing: border-box;
 }
 
 .form label {
@@ -63,6 +69,7 @@
 
 input,
 select, textarea {
+  width: 100%; /* ocupa todo o espaço do form (considerando box-sizing) */
   height: 40px;
   background-color: #393939;
   font-size: 1rem;
@@ -70,7 +77,8 @@ select, textarea {
   padding: 5px;
   border: none;
   position: relative;
-  z-index: 1002;
+  resize: vertical;
+  box-sizing: border-box; /* important to avoid overflow caused by padding */
 }
 input:focus,
 textarea:focus,
@@ -92,6 +100,8 @@ select:focus {
   cursor: pointer;
   transition: 0.2s;
   background-color: #2d8cff;
+  margin-top: 30px;
+  width: 100%;
 }
 .closeButton {
   position: absolute;
@@ -116,7 +126,3 @@ select:focus {
   font-weight: bold;
 }
 
-.form select {
-  padding: 10px;
-  width: 100%;
-}
