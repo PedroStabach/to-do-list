@@ -2,14 +2,13 @@ import './App.css'
 import { Account } from './Components/Account'
 import { Task } from './Components/Tasks'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
-import { PrivateRoute } from './Components/PrivateRoute'
+import { PrivateRoute } from './Routes/PrivateRoute'
 
 function App() {
   return (
     <Router>
       <Routes>
         {/* rota protegida */}
-        <Routes>
         <Route
           path="/"
           element={
@@ -18,8 +17,6 @@ function App() {
             </PrivateRoute>
           }
         />
-  <Route path="/login" element={<Account />} />
-</Routes>
 
         {/* rota pública */}
         <Route path="/login" element={<Account />} />
