@@ -6,6 +6,7 @@
   display: flex;
   justify-content: space-between;
   text-align: center;
+  align-items: center;
   padding: 10px;
   height: 60px;
   border-bottom: 1px solid #2a2d57;
@@ -16,4 +17,9 @@
 }
 .Header .FiIcon {
     margin-top: 15px;
+}
+.Header a {
+  color: rgb(176, 176, 176);
+  margin-right: 30px;
+  text-decoration: underline;
 }
