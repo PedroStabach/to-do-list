@@ -10,7 +10,6 @@ export function NewTask({ onClose }: NewTaskProps) {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [deadline, setDeadline] = useState("");
-  const [priority, setPriority] = useState("Baixo");
   const [error, setError] = useState("");
 
   async function handleSubmit(e: React.FormEvent) {
@@ -48,7 +47,6 @@ export function NewTask({ onClose }: NewTaskProps) {
       setTitle("");
       setDescription("");
       setDeadline("");
-      setPriority("Baixo");
 
       // Fecha o NewTask
       onClose();
@@ -91,13 +89,6 @@ export function NewTask({ onClose }: NewTaskProps) {
           onChange={(e) => setDeadline(e.target.value)}
           required
         />
-
-        <label>Prioridade</label>
-        <select value={priority} onChange={(e) => setPriority(e.target.value)}>
-          <option value="Baixo">Baixo</option>
-          <option value="Medio">Médio</option>
-          <option value="Alto">Alto</option>
-        </select>
 
         <button type="submit">Adicionar Tarefa</button>
 

@@ -14,10 +14,10 @@
   justify-content: flex-start; 
 }
 .taskList h2 {
-  color: aliceblue;
+  color: rgb(180, 180, 180);
 }
 .taskList p {
-  color: #8e8e8e;
+  color: #747474;
   text-align: start;
 }
 .taskItem {
@@ -29,7 +29,6 @@
   flex: 1 1 280px; /* largura base de 280px, mas pode encolher ou crescer */
   box-sizing: border-box;
 }
-
 .taskHeader {
   display: flex;
   justify-content: space-between;

@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+
 import styles from "./index.module.css";
 
 export function TaskList() {
@@ -74,7 +75,7 @@ export function TaskList() {
         {tasks.map((task: any) => (
           <li key={task.id} className={styles.taskItem}>
             <div className={styles.taskHeader}>
-              <h3>{task.titulo}</h3>
+              <h2>{task.titulo}</h2>
               <span
                 className={styles.status}
                 style={{
@@ -87,6 +88,9 @@ export function TaskList() {
                 }}
               >
                 {task.status}
+              </span>
+              <span>
+                {task.}
               </span>
             </div>
 
