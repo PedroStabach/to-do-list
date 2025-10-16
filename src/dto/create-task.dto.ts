@@ -11,4 +11,7 @@ export class CreateTaskDto {
   @IsOptional()
   @IsIn(['pendente', 'em andamento', 'concluída'])
   status?: string;
+
+  @IsOptional()
+  data_conclusao?: string;
 }
