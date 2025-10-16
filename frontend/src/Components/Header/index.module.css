@@ -1,5 +1,5 @@
 .Header {
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   right: 0;                 /* garante que ocupe toda a largura */
@@ -10,6 +10,8 @@
   padding: 10px;
   height: 60px;
   border-bottom: 1px solid #2a2d57;
+  z-index: 1003;
+  background-color: #0f1116;
 }
 .Header h1 {
     margin: 0;

@@ -16,29 +16,42 @@ export function TaskList() {
   const [error, setError] = useState("");
 
   useEffect(() => {
-    async function fetchTasks() {
-      try {
-        const token = localStorage.getItem("token");
-        if (!token) throw new Error("Usuário não autenticado.");
+  async function fetchTasks() {
+    try {
+      const token = localStorage.getItem("token");
+      if (!token) throw new Error("Usuário não autenticado.");
 
-        const response = await fetch("http://localhost:3000/tasks", {
-          headers: { Authorization: `Bearer ${token}` },
-        });
+      const response = await fetch("http://localhost:3000/tasks", {
+        headers: { Authorization: `Bearer ${token}` },
+      });
 
-        if (!response.ok) {
-          const err = await response.json().catch(() => ({}));
-          throw new Error(err.message || "Erro ao carregar tarefas");
-        }
-
-        const data = await response.json();
-        setTasks(data);
-      } catch (e: any) {
-        setError(e.message);
+      if (!response.ok) {
+        const err = await response.json().catch(() => ({}));
+        throw new Error(err.message || "Erro ao carregar tarefas");
       }
-    }
 
-    fetchTasks();
-  }, []);
+      let data: Task[] = await response.json();
+      
+      const agora = new Date();
+      data = data.map((task) => {
+        if (
+          task.data_conclusao &&
+          new Date(task.data_conclusao) < agora &&
+          task.status !== "concluída"
+        ) {
+          return { ...task, status: "vencido" };
+        }
+        return task;
+      });
+
+      setTasks(data);
+    } catch (e: any) {
+      setError(e.message);
+    }
+  }
+
+  fetchTasks();
+}, []);
 
   function formatarData(dataISO?: string) {
     if (!dataISO) return "-";
@@ -63,8 +76,6 @@ export function TaskList() {
 
   return (
     <div className={styles.taskListWrapper}>
-      <h2>Minhas Tarefas</h2>
-
       {error && <div className={styles.error}>{error}</div>}
 
       {tasks.length === 0 ? (
@@ -74,7 +85,7 @@ export function TaskList() {
           {tasks.map((task) => (
             <li key={task.id} className={styles.taskItem}>
               <div className={styles.taskHeader}>
-                <h3>{task.titulo}</h3>
+                <h2>{task.titulo}</h2>
                 <span
                   className={styles.status}
                   style={{ backgroundColor: statusColor(task.status) }}
@@ -86,10 +97,7 @@ export function TaskList() {
 
               <div className={styles.taskFooter}>
                 <span>
-                  <strong>Criação:</strong> {formatarData(task.data_criacao)}
-                </span>
-                <span>
-                  <strong>Conclusão:</strong>{" "}
+                  <strong>Data Limite:</strong>{" "}
                   {formatarData(task.data_conclusao)}
                 </span>
               </div>

@@ -51,7 +51,7 @@ export function Task() {
 
       {showNewTask && <NewTask onClose={handleNewTaskClose} />}
 
-      <div className={styles.container}>
+      <div className={styles.tasks}>
         <TaskList />
       </div>
     </>
