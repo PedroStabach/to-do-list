@@ -60,3 +60,12 @@
   text-align: center;
   margin-bottom: 10px;
 }
+.filterButtons button {
+  margin: 5px;
+}
+.filterButtons button:focus {
+  background-color: rgb(60, 44, 97);
+}
+.filterButtons {
+  margin-bottom: 50px;
+}
