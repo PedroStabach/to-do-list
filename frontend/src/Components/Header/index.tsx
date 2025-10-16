@@ -8,7 +8,7 @@ export function Header ( ) {
 
     function handleLogout(e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) {
     e.preventDefault();
-    localStorage.removeItem("token"); 
+    localStorage.removeItem('token'); 
     navigate("/login"); 
   }
     return (
