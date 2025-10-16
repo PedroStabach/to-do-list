@@ -94,6 +94,7 @@ export function TaskList() {
       <ul className={styles.taskList}>
         {tasks.map((task: any) => (
           <li key={task.id} className={styles.taskItem}>
+            
             <div className={styles.taskHeader}>
               <h2>{task.titulo}</h2>
               <div style={{ display: "flex", gap: "8px", alignItems: "center" }}>

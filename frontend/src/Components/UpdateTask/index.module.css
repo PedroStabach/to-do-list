@@ -2,27 +2,22 @@
   position: fixed;
   top: 0; 
   left: 0;
-  width: 100%; /* avoid horizontal overflow on mobile */
-  height: 100vh;
+  width: 100%;
+  height: 100%;
+  overflow-y: auto; /* ✅ permite rolar */
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start; /* ✅ começa no topo, rola se for grande */
   text-align: start;
   z-index: 1004;
   pointer-events: auto;
-
-  overflow-x: hidden;
   box-sizing: border-box;
 
-}
-.wrapper::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: rgba(0,0,0,0.35);
+  background: rgba(0, 0, 0, 0.35); /* ✅ blur + escurecido */
   backdrop-filter: blur(6px);
   -webkit-backdrop-filter: blur(6px);
-  z-index: 1000; /* deve ficar abaixo do form (form tem z-index:1001) */
+
+  padding: 40px 0; /* espaço acima e abaixo do form */
 }
 
 .form {
@@ -31,24 +26,20 @@
   border-radius: 10px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   width: 350px;
-  max-width: calc(100% - 40px); /* garante espaço lateral em telas pequenas */
+  max-width: calc(100% - 40px);
   display: flex;
   flex-direction: column;
   gap: 15px;
   position: relative;
   z-index: 1001;
-
-  /* ajustes para painel no canto direito */
-  margin-right: 20px; /* distância do canto */
-  max-height: 90vh;
-  overflow-y: auto;
-  padding-top: 44px; /* mantém espaço para o X */
+  margin: 60px 0; /* ✅ espaçamento pra não grudar no topo/fundo */
   box-sizing: border-box;
 }
 
 .form label {
   text-align: start;
   width: 100%;
+  color: #fff;
 }
 
 .title {
@@ -57,14 +48,13 @@
   margin: 0;
   font-size: 1.5rem;
   color: #fff;
-
 }
 
-
-
 input,
-select, textarea {
-  width: 100%; /* ocupa todo o espaço do form (considerando box-sizing) */
+select,
+textarea , 
+.trashButton{
+  width: 100%;
   height: 40px;
   background-color: #393939;
   font-size: 1rem;
@@ -73,8 +63,10 @@ select, textarea {
   border: none;
   position: relative;
   resize: vertical;
-  box-sizing: border-box; /* important to avoid overflow caused by padding */
+  box-sizing: border-box;
+  color: #fff;
 }
+
 input:focus,
 textarea:focus,
 select:focus {
@@ -98,11 +90,15 @@ select:focus {
   margin-top: 30px;
   width: 100%;
 }
+
+.wrapper button:hover {
+  background-color: #2473d6;
+}
+
 .closeButton {
   position: absolute;
-  top: 30px;
-  left: 10px; /* moved to left */
-  right: auto;
+  top: 20px;
+  left: 15px;
   background: transparent;
   border: none;
   color: #fff;
@@ -112,9 +108,13 @@ select:focus {
   align-items: center;
   justify-content: center;
   z-index: 1005;
-  background-color: #101115;
 }
-
+.trashButton {
+  border: 1px solid #2473d6;
+  background-color: #101115;
+  height: 50px;
+  cursor: pointer;
+}
 .error {
   color: red;
   text-align: center;
@@ -124,26 +124,21 @@ select:focus {
 @media (max-width: 400px) {
   .wrapper {
     align-items: flex-start;
-    padding: 0;
-    top: var(--header-height, 80px);
-    height: 100vh;
+    padding: 20px 0;
   }
 
   .form {
     width: 100%;
-    height: 100vh;
     max-width: 100%;
     margin: 0;
     border-radius: 0;
     box-shadow: none;
     padding: 20px;
-    overflow-y: auto;
   }
 
   .closeButton {
     top: 15px;
     left: 15px;
-    background-color: transparent;
   }
 
   .title {

@@ -13,6 +13,10 @@
   cursor: pointer;
   justify-content: flex-start; 
 }
+.taskItem:hover {
+  transform: scale(1.05);
+  transition: .5s ease;
+} 
 .taskList h2 {
   color: rgb(180, 180, 180);
 }

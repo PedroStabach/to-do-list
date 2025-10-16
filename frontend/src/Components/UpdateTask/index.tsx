@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { FaTimes } from "react-icons/fa";
+import { ReactElement, useState } from "react";
+import { FaTimes , FaTrash} from "react-icons/fa";
 import styles from "./index.module.css";
 
 interface UpdateTaskProps {
@@ -11,8 +11,32 @@ export function UpdateTask({ onClose, task }: UpdateTaskProps) {
   const [title, setTitle] = useState(task?.titulo || "");
   const [description, setDescription] = useState(task?.descricao || "");
   const [deadline, setDeadline] = useState(task?.data_conclusao?.slice(0, 10) || "");
+  const [status, setStatus] = useState(task?.status || "");
   const [error, setError] = useState("");
+  async function handleDelete() {
+    try {
+      const token = localStorage.getItem('token');
+      if(!token) throw new Error("Usuário não autenticado.");
 
+      const response = await fetch(`http://localhost:3000/tasks/${task.id}`, {
+        method: "DELETE",
+        headers: { 
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`
+        },
+      });
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({ error: "Erro inesperado" }));
+        throw new Error(errorData.error || "Erro ao atualizar tarefa");
+      }
+
+      alert("Tarefa apagada com sucesso!");
+      onClose();
+      window.location.reload();
+    } catch(err : any) {
+      setError(err.message);
+    }
+  }
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     setError("");
@@ -35,6 +59,7 @@ export function UpdateTask({ onClose, task }: UpdateTaskProps) {
         body: JSON.stringify({
           titulo: title,
           descricao: description,
+          status,
           data_conclusao: deadlineDate.toISOString()
         })
       });
@@ -57,7 +82,7 @@ export function UpdateTask({ onClose, task }: UpdateTaskProps) {
     <div className={styles.wrapper}>
       <form className={styles.form} onSubmit={handleSubmit}>
         <FaTimes size={30} className={styles.closeButton} onClick={onClose} />
-
+        
         <h2 className={styles.title}>Editar Tarefa</h2>
 
         <label>Título</label>
@@ -84,9 +109,18 @@ export function UpdateTask({ onClose, task }: UpdateTaskProps) {
           onChange={(e) => setDeadline(e.target.value)}
           required
         />
+        <label>Status</label>
+        <select
+        value={status}
+        onChange={(e) => setStatus(e.target.value)}
+        >
+        <option value="pendente">Pendente</option>
+        <option value="concluido">Concluído</option>
+      </select>
+
 
         <button type="submit">Salvar Alterações</button>
-
+        <FaTrash size={30} className={styles.trashButton} style={{color:"#f00"}} onClick={handleDelete}/>
         {error && <div className={styles.error}>{error}</div>}
       </form>
     </div>
