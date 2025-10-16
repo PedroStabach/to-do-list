@@ -1,15 +1,16 @@
 import { useState } from "react";
-import { FaTimes, FaPencilAlt } from "react-icons/fa";
+import { FaTimes } from "react-icons/fa";
 import styles from "./index.module.css";
 
-interface NewTaskProps {
-  onClose: () => void; // função para fechar o componente
+interface UpdateTaskProps {
+  onClose: () => void;   // função para fechar o componente
+  task: any;             // tarefa a ser editada (vem da lista)
 }
 
-export function NewTask({ onClose }: NewTaskProps) {
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
-  const [deadline, setDeadline] = useState("");
+export function UpdateTask({ onClose, task }: UpdateTaskProps) {
+  const [title, setTitle] = useState(task?.titulo || "");
+  const [description, setDescription] = useState(task?.descricao || "");
+  const [deadline, setDeadline] = useState(task?.data_conclusao?.slice(0, 10) || "");
   const [error, setError] = useState("");
 
   async function handleSubmit(e: React.FormEvent) {
@@ -18,39 +19,33 @@ export function NewTask({ onClose }: NewTaskProps) {
 
     try {
       const token = localStorage.getItem("token");
+      if (!token) throw new Error("Usuário não autenticado.");
+
       const deadlineDate = new Date(deadline);
-      if(deadlineDate.getTime() < Date.now()) {
-        return alert("data final precisa ser maior que a atual");
+      if (deadlineDate.getTime() < Date.now()) {
+        return alert("A data final precisa ser maior que a atual.");
       }
-      const response = await fetch("http://localhost:3000/tasks", {
-        method: "POST",
+
+      const response = await fetch(`http://localhost:3000/tasks/${task.id}`, {
+        method: "PATCH", 
         headers: { 
           "Content-Type": "application/json",
-          "Authorization": `Bearer ${token}` // O token JWT do login
+          "Authorization": `Bearer ${token}`
         },
         body: JSON.stringify({
           titulo: title,
           descricao: description,
-          status: "pendente",
-          data_criacao: new Date().toISOString(),
           data_conclusao: deadlineDate.toISOString()
         })
       });
 
-
       if (!response.ok) {
         const errorData = await response.json().catch(() => ({ error: "Erro inesperado" }));
-        throw new Error(errorData.error || "Erro ao criar tarefa");
+        throw new Error(errorData.error || "Erro ao atualizar tarefa");
       }
 
-      // Limpa campos
-      setTitle("");
-      setDescription("");
-      setDeadline("");
-
-      // Fecha o NewTask
+      alert("Tarefa atualizada com sucesso!");
       onClose();
-      alert("Nova Tarefa criada com sucesso!");
       window.location.reload();
 
     } catch (e: any) {
@@ -63,7 +58,7 @@ export function NewTask({ onClose }: NewTaskProps) {
       <form className={styles.form} onSubmit={handleSubmit}>
         <FaTimes size={30} className={styles.closeButton} onClick={onClose} />
 
-        <h2 className={styles.title}>Nova Tarefa</h2>
+        <h2 className={styles.title}>Editar Tarefa</h2>
 
         <label>Título</label>
         <input
@@ -90,7 +85,7 @@ export function NewTask({ onClose }: NewTaskProps) {
           required
         />
 
-        <button type="submit">Adicionar Tarefa</button>
+        <button type="submit">Salvar Alterações</button>
 
         {error && <div className={styles.error}>{error}</div>}
       </form>

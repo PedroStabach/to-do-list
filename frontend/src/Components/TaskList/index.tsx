@@ -1,12 +1,16 @@
 import { useState, useEffect } from "react";
-
+import { FiCheck } from "react-icons/fi";
+import { FaPencilAlt } from "react-icons/fa";
 import styles from "./index.module.css";
+import { UpdateTask } from "../UpdateTask";
 
 export function TaskList() {
+  const [showUpdateTask, setShowUpdateTask] = useState(false);
+  const [selectedTask, setSelectedTask] = useState<any>(null);
   const [tasks, setTasks] = useState([]);
   const [error, setError] = useState("");
 
-  // Função para carregar todas as tarefas
+  // Carregar tarefas
   async function loadTasks() {
     try {
       const token = localStorage.getItem("token");
@@ -25,7 +29,10 @@ export function TaskList() {
       const data = await response.json();
 
       const updated = data.map((task: any) => {
-        if (task.status !== "concluido" && new Date(task.data_conclusao) < new Date()) {
+        if (
+          task.status !== "concluido" &&
+          new Date(task.data_conclusao) < new Date()
+        ) {
           return { ...task, status: "vencido" };
         }
         return task;
@@ -37,7 +44,7 @@ export function TaskList() {
     }
   }
 
-  // ✅ Atualiza status da tarefa para concluído
+  // Concluir tarefa
   async function handleConcluir(id: number) {
     try {
       const token = localStorage.getItem("token");
@@ -57,11 +64,23 @@ export function TaskList() {
         throw new Error(err.message || "Erro ao concluir tarefa");
       }
 
-      // Atualiza a lista sem precisar reload
       await loadTasks();
     } catch (err: any) {
       setError(err.message);
     }
+  }
+
+  // Abrir modal de edição
+  function handleOpenUpdate(task: any) {
+    setSelectedTask(task);
+    setShowUpdateTask(true);
+  }
+
+  // Fechar modal e recarregar lista
+  function handleCloseUpdate() {
+    setShowUpdateTask(false);
+    setSelectedTask(null);
+    loadTasks();
   }
 
   useEffect(() => {
@@ -71,43 +90,59 @@ export function TaskList() {
   return (
     <div className={styles.taskListWrapper}>
       {error && <div className={styles.error}>{error}</div>}
+
       <ul className={styles.taskList}>
         {tasks.map((task: any) => (
           <li key={task.id} className={styles.taskItem}>
             <div className={styles.taskHeader}>
               <h2>{task.titulo}</h2>
-              <span
-                className={styles.status}
-                style={{
-                  backgroundColor:
-                    task.status === "concluido"
-                      ? "green"
-                      : task.status === "vencido"
-                      ? "red"
-                      : "orange",
-                }}
-              >
-                {task.status}
-              </span>
-              <span>
-                {task.}
-              </span>
+              <div style={{ display: "flex", gap: "8px", alignItems: "center" }}>
+                {task.status !== "concluido" && task.status !== "vencido" && (
+                  <FiCheck
+                    size={20}
+                    color="#2d8cff"
+                    style={{ cursor: "pointer" }}
+                    onClick={() => handleConcluir(task.id)}
+                  />
+                )}
+                <span
+              className={styles.status}
+              style={{
+                backgroundColor:
+                  task.status === "concluido"
+                    ? "green"
+                    : task.status === "vencido"
+                    ? "red"
+                    : "orange",
+              }}
+            >
+              {task.status}
+            </span>
+              </div>
             </div>
 
             <p>{task.descricao}</p>
-            <div className={styles.taskFooter}>
-              <span>Data: {new Date(task.data_conclusao).toLocaleDateString()}</span>
 
-              {/* 🔥 Só mostra o botão se o status for diferente de "concluido" e "vencido" */}
-              {task.status !== "concluido" && task.status !== "vencido" && (
-                <button onClick={() => handleConcluir(task.id)}>
-                  Concluir
-                </button>
-              )}
+            <div className={styles.taskFooter}>
+              <span>Criação: {new Date(task.data_criacao).toLocaleDateString()}</span>
+              <span>Vencimento: {new Date(task.data_conclusao).toLocaleDateString()}</span>
+            </div>
+            <div className={styles.taskFooter}>
+              <FaPencilAlt
+                  size={17}
+                  color="#2d8cff"
+                  style={{ cursor: "pointer" }}
+                  onClick={() => handleOpenUpdate(task)}
+            />
             </div>
           </li>
         ))}
       </ul>
+
+      {/* Modal de edição */}
+      {showUpdateTask && selectedTask && (
+        <UpdateTask onClose={handleCloseUpdate} task={selectedTask} />
+      )}
     </div>
   );
 }
