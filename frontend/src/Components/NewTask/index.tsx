@@ -19,12 +19,9 @@ export function NewTask({ onClose }: NewTaskProps) {
 
     try {
       const token = localStorage.getItem("token");
-
       const deadlineDate = new Date(deadline);
-
-      if (deadlineDate < new Date()) {
-        alert("A data limite precisa ser maior que a atual.");
-        return; // impede envio
+      if(deadlineDate.getTime() < Date.now()) {
+        return alert("data final precisa ser maior que a atual");
       }
       const response = await fetch("http://localhost:3000/tasks", {
         method: "POST",

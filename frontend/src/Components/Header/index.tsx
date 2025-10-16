@@ -14,7 +14,7 @@ export function Header ( ) {
     return (
         <>
             <div className={styles.Header}>
-                <h1>Tasks</h1>
+                <h1>MyTasks</h1>
 
                 {token ? (
                     <a href="/login" onClick={handleLogout}>
