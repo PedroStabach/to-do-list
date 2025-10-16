@@ -4,14 +4,14 @@
 }
 
 .taskList {
-  width: 300px;
+  display: flex;
+  flex-wrap: wrap; 
+  gap: 20px; 
   list-style: none;
   padding: 0;
   margin: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
   cursor: pointer;
+  justify-content: flex-start; 
 }
 .taskList h2 {
   color: aliceblue;
@@ -25,6 +25,9 @@
   border-radius: 10px;
   padding: 15px;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+  max-width: 350px;
+  flex: 1 1 280px; /* largura base de 280px, mas pode encolher ou crescer */
+  box-sizing: border-box;
 }
 
 .taskHeader {

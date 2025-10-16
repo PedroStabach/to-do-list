@@ -26,7 +26,6 @@
   right: 0;
   bottom: 0;
   width: 100%;
-  
   background-color: #0f1116; /* cor de fundo opcional */
   overflow-y: auto;
   box-sizing: border-box;

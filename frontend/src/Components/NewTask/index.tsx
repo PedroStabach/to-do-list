@@ -53,6 +53,7 @@ export function NewTask({ onClose }: NewTaskProps) {
       // Fecha o NewTask
       onClose();
       alert("Nova Tarefa criada com sucesso!");
+      window.location.reload();
 
     } catch (e: any) {
       setError(e.message);

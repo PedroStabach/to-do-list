@@ -1,27 +1,18 @@
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 import styles from "./index.module.css";
 
-interface Task {
-  id: number;
-  titulo: string;
-  descricao: string;
-  status: string;
-  data_criacao: string;
-  data_conclusao?: string;
-  prioridade?: string;
-}
-
 export function TaskList() {
-  const [tasks, setTasks] = useState<Task[]>([]);
+  const [tasks, setTasks] = useState([]);
   const [error, setError] = useState("");
 
-  useEffect(() => {
-  async function fetchTasks() {
+  // Função para carregar todas as tarefas
+  async function loadTasks() {
     try {
       const token = localStorage.getItem("token");
       if (!token) throw new Error("Usuário não autenticado.");
 
       const response = await fetch("http://localhost:3000/tasks", {
+        method: "GET",
         headers: { Authorization: `Bearer ${token}` },
       });
 
@@ -30,81 +21,89 @@ export function TaskList() {
         throw new Error(err.message || "Erro ao carregar tarefas");
       }
 
-      let data: Task[] = await response.json();
-      
-      const agora = new Date();
-      data = data.map((task) => {
-        if (
-          task.data_conclusao &&
-          new Date(task.data_conclusao) < agora &&
-          task.status !== "concluída"
-        ) {
+      const data = await response.json();
+
+      const updated = data.map((task: any) => {
+        if (task.status !== "concluido" && new Date(task.data_conclusao) < new Date()) {
           return { ...task, status: "vencido" };
         }
         return task;
       });
 
-      setTasks(data);
-    } catch (e: any) {
-      setError(e.message);
+      setTasks(updated);
+    } catch (err: any) {
+      setError(err.message);
     }
   }
 
-  fetchTasks();
-}, []);
+  // ✅ Atualiza status da tarefa para concluído
+  async function handleConcluir(id: number) {
+    try {
+      const token = localStorage.getItem("token");
+      if (!token) throw new Error("Usuário não autenticado.");
 
-  function formatarData(dataISO?: string) {
-    if (!dataISO) return "-";
-    const data = new Date(dataISO);
-    return data.toLocaleDateString("pt-BR");
-  }
+      const response = await fetch(`http://localhost:3000/tasks/${id}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ status: "concluido" }),
+      });
 
-  function statusColor(status: string) {
-    switch (status) {
-        case "pendente":
-            return "#f1c40f";
-        case "em andamento":
-            return "#3498db";
-        case "concluída":
-            return "#2ecc71";
-        case "vencida":
-            return "rgba(163, 39, 39, 1)"
-        default:
-            return "#aaa";
+      if (!response.ok) {
+        const err = await response.json().catch(() => ({}));
+        throw new Error(err.message || "Erro ao concluir tarefa");
+      }
+
+      // Atualiza a lista sem precisar reload
+      await loadTasks();
+    } catch (err: any) {
+      setError(err.message);
     }
   }
+
+  useEffect(() => {
+    loadTasks();
+  }, []);
 
   return (
     <div className={styles.taskListWrapper}>
       {error && <div className={styles.error}>{error}</div>}
+      <ul className={styles.taskList}>
+        {tasks.map((task: any) => (
+          <li key={task.id} className={styles.taskItem}>
+            <div className={styles.taskHeader}>
+              <h3>{task.titulo}</h3>
+              <span
+                className={styles.status}
+                style={{
+                  backgroundColor:
+                    task.status === "concluido"
+                      ? "green"
+                      : task.status === "vencido"
+                      ? "red"
+                      : "orange",
+                }}
+              >
+                {task.status}
+              </span>
+            </div>
 
-      {tasks.length === 0 ? (
-        <p>Nenhuma tarefa cadastrada ainda.</p>
-      ) : (
-        <ul className={styles.taskList}>
-          {tasks.map((task) => (
-            <li key={task.id} className={styles.taskItem}>
-              <div className={styles.taskHeader}>
-                <h2>{task.titulo}</h2>
-                <span
-                  className={styles.status}
-                  style={{ backgroundColor: statusColor(task.status) }}
-                >
-                  {task.status}
-                </span>
-              </div>
-              <p>{task.descricao}</p>
+            <p>{task.descricao}</p>
+            <div className={styles.taskFooter}>
+              <span>Data: {new Date(task.data_conclusao).toLocaleDateString()}</span>
 
-              <div className={styles.taskFooter}>
-                <span>
-                  <strong>Data Limite:</strong>{" "}
-                  {formatarData(task.data_conclusao)}
-                </span>
-              </div>
-            </li>
-          ))}
-        </ul>
-      )}
+              {/* 🔥 Só mostra o botão se o status for diferente de "concluido" e "vencido" */}
+              {task.status !== "concluido" && task.status !== "vencido" && (
+                <button onClick={() => handleConcluir(task.id)}>
+                  Concluir
+                </button>
+              )}
+            </div>
+          </li>
+        ))}
+      </ul>
     </div>
   );
 }
