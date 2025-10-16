@@ -19,12 +19,13 @@ export class TasksController {
   }
 
   @Patch(':id')
-  update(@Req() req, @Param('id') id: number, @Body() dto: CreateTaskDto) {
-    return this.tasksService.update(req.user.sub, id, dto);
+  update(@Req() req, @Param('id') id: string, @Body() dto: CreateTaskDto) {
+    return this.tasksService.update(req.user.sub, Number(id), dto); // ✅ converte pra número
   }
 
   @Delete(':id')
-  remove(@Req() req, @Param('id') id: number) {
-    return this.tasksService.delete(req.user.sub, id);
+  remove(@Req() req, @Param('id') id: string) {
+    return this.tasksService.delete(req.user.sub, Number(id)); // ✅ converte pra número
   }
+
 }
