@@ -47,7 +47,6 @@ export function Account () {
                     <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} required/>
                     <button type="submit">Entrar</button>
                     <button type="button" className={styles.CriarConta} onClick={handleRegister}>Criar Conta</button>
-                    <h3>Esqueci minha senha</h3>
                     {error && <div className={styles.error}>{error}</div>}
                 </form>
                 

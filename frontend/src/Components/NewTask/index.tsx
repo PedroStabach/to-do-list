@@ -1,8 +1,12 @@
 import { useState } from "react";
-import { FaCheckCircle, FaTimes } from "react-icons/fa";
+import { FaTimes } from "react-icons/fa";
 import styles from "./index.module.css";
 
-export function NewTask() {
+interface NewTaskProps {
+  onClose: () => void; // função para fechar o componente
+}
+
+export function NewTask({ onClose }: NewTaskProps) {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [deadline, setDeadline] = useState("");
@@ -14,22 +18,45 @@ export function NewTask() {
     setError("");
 
     try {
-      const response = await fetch("/auth/task", { // changed: caminho absoluto
+      const token = localStorage.getItem("token");
+
+      const deadlineDate = new Date(deadline);
+
+      if (deadlineDate < new Date()) {
+        alert("A data limite precisa ser maior que a atual.");
+        return; // impede envio
+      }
+      const response = await fetch("http://localhost:3000/tasks", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ title, description, deadline, priority })
+        headers: { 
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}` // O token JWT do login
+        },
+        body: JSON.stringify({
+          titulo: title,
+          descricao: description,
+          status: "pendente",
+          data_criacao: new Date().toISOString(),
+          data_conclusao: deadlineDate.toISOString()
+        })
       });
+
 
       if (!response.ok) {
         const errorData = await response.json().catch(() => ({ error: "Erro inesperado" }));
         throw new Error(errorData.error || "Erro ao criar tarefa");
       }
 
-      // sucesso: limpar formulário (não sobrescrever token aqui)
+      // Limpa campos
       setTitle("");
       setDescription("");
       setDeadline("");
       setPriority("Baixo");
+
+      // Fecha o NewTask
+      onClose();
+      alert("Nova Tarefa criada com sucesso!");
+
     } catch (e: any) {
       setError(e.message);
     }
@@ -38,8 +65,8 @@ export function NewTask() {
   return (
     <div className={styles.wrapper}>
       <form className={styles.form} onSubmit={handleSubmit}>
-          <FaTimes size={30}  className={styles.closeButton} />
-      
+        <FaTimes size={30} className={styles.closeButton} onClick={onClose} />
+
         <h2 className={styles.title}>Nova Tarefa</h2>
 
         <label>Título</label>
@@ -74,9 +101,7 @@ export function NewTask() {
           <option value="Alto">Alto</option>
         </select>
 
-        <button type="submit">
-          Adicionar Tarefa
-        </button>
+        <button type="submit">Adicionar Tarefa</button>
 
         {error && <div className={styles.error}>{error}</div>}
       </form>
