@@ -19,7 +19,9 @@ export function TaskList() {
   const [selectedTask, setSelectedTask] = useState<Task | null>(null);
   const [tasks, setTasks] = useState<Task[]>([]);
   const [error, setError] = useState("");
-  const [filter, setFilter] = useState<"todas" | "concluido" | "andamento" | "vencido">("todas");
+  const [filter, setFilter] = useState<
+    "todas" | "concluido" | "andamento" | "vencido"
+  >("todas");
   const [loading, setLoading] = useState(false);
 
   // busca do backend e aplicação do filtro no frontend
@@ -43,7 +45,11 @@ export function TaskList() {
       // atualizar status para 'vencido' localmente quando necessário
       const agora = new Date();
       data = data.map((t) => {
-        if (t.status !== "concluido" && t.data_conclusao && new Date(t.data_conclusao) < agora) {
+        if (
+          t.status !== "concluido" &&
+          t.data_conclusao &&
+          new Date(t.data_conclusao) < agora
+        ) {
           return { ...t, status: "vencido" };
         }
         return t;
@@ -51,9 +57,14 @@ export function TaskList() {
 
       // aplicar filtro
       let filtered = data;
-      if (filter === "concluido") filtered = data.filter((t) => t.status === "concluido");
-      else if (filter === "andamento") filtered = data.filter((t) => t.status !== "concluido" && t.status !== "vencido");
-      else if (filter === "vencido") filtered = data.filter((t) => t.status === "vencido");
+      if (filter === "concluido")
+        filtered = data.filter((t) => t.status === "concluido");
+      else if (filter === "andamento")
+        filtered = data.filter(
+          (t) => t.status !== "concluido" && t.status !== "vencido",
+        );
+      else if (filter === "vencido")
+        filtered = data.filter((t) => t.status === "vencido");
 
       setTasks(filtered);
     } catch (err: any) {
@@ -103,7 +114,9 @@ export function TaskList() {
   }
 
   // trocar filtro e recarregar
-  function handleFilterChange(next: "todas" | "concluido" | "andamento" | "vencido") {
+  function handleFilterChange(
+    next: "todas" | "concluido" | "andamento" | "vencido",
+  ) {
     setFilter(next);
   }
 
@@ -117,13 +130,35 @@ export function TaskList() {
       {error && <div className={styles.error}>{error}</div>}
 
       <div className={styles.filterButtons}>
-        <button className={filter === "todas" ? styles.activeFilter : ""} onClick={() => handleFilterChange("todas")}>Todas</button>
-        <button className={filter === "andamento" ? styles.activeFilter : ""} onClick={() => handleFilterChange("andamento")}>Em andamento</button>
-        <button className={filter === "concluido" ? styles.activeFilter : ""} onClick={() => handleFilterChange("concluido")}>Concluídas</button>
-        <button className={filter === "vencido" ? styles.activeFilter : ""} onClick={() => handleFilterChange("vencido")}>Vencidas</button>
+        <button
+          className={filter === "todas" ? styles.activeFilter : ""}
+          onClick={() => handleFilterChange("todas")}
+        >
+          Todas
+        </button>
+        <button
+          className={filter === "andamento" ? styles.activeFilter : ""}
+          onClick={() => handleFilterChange("andamento")}
+        >
+          Em andamento
+        </button>
+        <button
+          className={filter === "concluido" ? styles.activeFilter : ""}
+          onClick={() => handleFilterChange("concluido")}
+        >
+          Concluídas
+        </button>
+        <button
+          className={filter === "vencido" ? styles.activeFilter : ""}
+          onClick={() => handleFilterChange("vencido")}
+        >
+          Vencidas
+        </button>
       </div>
 
-      {loading ? <p>Carregando...</p> : (
+      {loading ? (
+        <p>Carregando...</p>
+      ) : (
         <ul className={styles.taskList}>
           {tasks.map((task) => (
             <li key={task.id} className={styles.taskItem}>
@@ -132,15 +167,23 @@ export function TaskList() {
 
                 <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
                   {task.status !== "concluido" && task.status !== "vencido" && (
-                    <FiCheck size={20} color="#2d8cff" style={{ cursor: "pointer" }} onClick={() => handleConcluir(task.id)} />
+                    <FiCheck
+                      size={20}
+                      color="#2d8cff"
+                      style={{ cursor: "pointer" }}
+                      onClick={() => handleConcluir(task.id)}
+                    />
                   )}
 
                   <span
                     className={styles.status}
                     style={{
                       backgroundColor:
-                        task.status === "concluido" ? "green" :
-                        task.status === "vencido" ? "red" : "orange",
+                        task.status === "concluido"
+                          ? "green"
+                          : task.status === "vencido"
+                            ? "red"
+                            : "orange",
                     }}
                   >
                     {task.status}
@@ -158,8 +201,16 @@ export function TaskList() {
               <p>{task.descricao}</p>
 
               <div className={styles.taskFooter}>
-                <span>Criação: {new Date(task.data_criacao).toLocaleDateString("pt-BR")}</span>
-                <span>Vencimento: {task.data_conclusao ? new Date(task.data_conclusao).toLocaleDateString("pt-BR") : "-"}</span>
+                <span>
+                  Criação:{" "}
+                  {new Date(task.data_criacao).toLocaleDateString("pt-BR")}
+                </span>
+                <span>
+                  Vencimento:{" "}
+                  {task.data_conclusao
+                    ? new Date(task.data_conclusao).toLocaleDateString("pt-BR")
+                    : "-"}
+                </span>
               </div>
             </li>
           ))}

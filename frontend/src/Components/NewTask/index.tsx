@@ -19,27 +19,28 @@ export function NewTask({ onClose }: NewTaskProps) {
     try {
       const token = localStorage.getItem("token");
       const deadlineDate = new Date(deadline);
-      if(deadlineDate.getTime() < Date.now()) {
+      if (deadlineDate.getTime() < Date.now()) {
         return alert("data final precisa ser maior que a atual");
       }
       const response = await fetch("http://localhost:3000/tasks", {
         method: "POST",
-        headers: { 
+        headers: {
           "Content-Type": "application/json",
-          "Authorization": `Bearer ${token}` // O token JWT do login
+          Authorization: `Bearer ${token}`, // O token JWT do login
         },
         body: JSON.stringify({
           titulo: title,
           descricao: description,
           status: "pendente",
           data_criacao: new Date().toISOString(),
-          data_conclusao: deadlineDate.toISOString()
-        })
+          data_conclusao: deadlineDate.toISOString(),
+        }),
       });
 
-
       if (!response.ok) {
-        const errorData = await response.json().catch(() => ({ error: "Erro inesperado" }));
+        const errorData = await response
+          .json()
+          .catch(() => ({ error: "Erro inesperado" }));
         throw new Error(errorData.error || "Erro ao criar tarefa");
       }
 
@@ -52,7 +53,6 @@ export function NewTask({ onClose }: NewTaskProps) {
       onClose();
       alert("Nova Tarefa criada com sucesso!");
       window.location.reload();
-
     } catch (e: any) {
       setError(e.message);
     }

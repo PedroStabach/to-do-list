@@ -1,6 +1,6 @@
 .wrapper {
   position: fixed;
-  top: 0; 
+  top: 0;
   left: 0;
   width: 100%; /* avoid horizontal overflow on mobile */
   height: 100vh;
@@ -13,13 +13,12 @@
 
   overflow-x: hidden;
   box-sizing: border-box;
-
 }
 .wrapper::before {
   content: "";
   position: absolute;
   inset: 0;
-  background: rgba(0,0,0,0.35);
+  background: rgba(0, 0, 0, 0.35);
   backdrop-filter: blur(6px);
   -webkit-backdrop-filter: blur(6px);
   z-index: 1000; /* deve ficar abaixo do form (form tem z-index:1001) */
@@ -57,13 +56,11 @@
   margin: 0;
   font-size: 1.5rem;
   color: #fff;
-
 }
 
-
-
 input,
-select, textarea {
+select,
+textarea {
   width: 100%; /* ocupa todo o espaço do form (considerando box-sizing) */
   height: 40px;
   background-color: #393939;

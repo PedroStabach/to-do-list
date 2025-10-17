@@ -2,7 +2,7 @@
   position: fixed;
   top: 0;
   left: 0;
-  right: 0;                 /* garante que ocupe toda a largura */
+  right: 0; /* garante que ocupe toda a largura */
   display: flex;
   justify-content: space-between;
   text-align: center;
@@ -14,11 +14,11 @@
   background-color: #0f1116;
 }
 .Header h1 {
-    margin: 0;
-    padding: 0;
+  margin: 0;
+  padding: 0;
 }
 .Header .FiIcon {
-    margin-top: 15px;
+  margin-top: 15px;
 }
 .Header a {
   color: rgb(176, 176, 176);

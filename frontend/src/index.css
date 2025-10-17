@@ -1,5 +1,5 @@
 :root {
-  font-family: 'Times New Roman', Times, serif;
+  font-family: "Times New Roman", Times, serif;
   line-height: 1.5;
   font-weight: 400;
 
@@ -38,12 +38,12 @@ h2 {
   font-size: 1.5em;
   line-height: 1;
   font-weight: lighter;
-  color: #6B7280;
+  color: #6b7280;
 }
 h3 {
   font-size: 1em;
   line-height: 1;
-  color: #6B7280;
+  color: #6b7280;
   font-weight: lighter;
 }
 span {

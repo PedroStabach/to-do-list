@@ -5,18 +5,18 @@
 
 .taskList {
   display: flex;
-  flex-wrap: wrap; 
-  gap: 20px; 
+  flex-wrap: wrap;
+  gap: 20px;
   list-style: none;
   padding: 0;
   margin: 0;
   cursor: pointer;
-  justify-content: flex-start; 
+  justify-content: flex-start;
 }
 .taskItem:hover {
   transform: scale(1.05);
-  transition: .5s ease;
-} 
+  transition: 0.5s ease;
+}
 .taskList h2 {
   color: rgb(180, 180, 180);
 }

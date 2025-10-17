@@ -1,8 +1,8 @@
-import { Header } from '../Header';
-import styles from './index.module.css';
-import { NewTask } from '../NewTask';
-import { useState, useEffect } from 'react';
-import { TaskList } from '../TaskList';
+import { Header } from "../Header";
+import styles from "./index.module.css";
+import { NewTask } from "../NewTask";
+import { useState, useEffect } from "react";
+import { TaskList } from "../TaskList";
 interface TaskType {
   id: number;
   titulo: string;
@@ -23,12 +23,11 @@ export function Task() {
 
     try {
       const response = await fetch("http://localhost:3000/tasks", {
-        headers: { Authorization: `Bearer ${token}` }
+        headers: { Authorization: `Bearer ${token}` },
       });
       if (!response.ok) throw new Error("Erro ao buscar tarefas");
       const data = await response.json();
       setTasks(data);
-      
     } catch (err: any) {
       console.error(err.message);
     }
@@ -47,7 +46,9 @@ export function Task() {
   return (
     <>
       <Header />
-      <div className={styles.newTask} onClick={() => setShowNewTask(true)}>+</div>
+      <div className={styles.newTask} onClick={() => setShowNewTask(true)}>
+        +
+      </div>
 
       {showNewTask && <NewTask onClose={handleNewTaskClose} />}
 

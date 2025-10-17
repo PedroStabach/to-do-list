@@ -1,9 +1,9 @@
 import { Module } from '@nestjs/common';
 import { AuthModule } from './auth/auth.module';
 import { PrismaService } from './prisma/prisma.service';
-import {TasksModule} from  './tasks/tasks.module'
+import { TasksModule } from './tasks/task.module';
 @Module({
-  imports: [AuthModule, TasksModule], 
+  imports: [AuthModule, TasksModule],
   controllers: [],
   providers: [PrismaService],
 })
