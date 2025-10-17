@@ -18,6 +18,10 @@ Antes de começar, certifique-se de ter instalado:
 Após clonar o projeto, rode o seguinte comando na raiz para instalar todas as dependências e gerar o Prisma Client:
 
 ```bash
+## Instalar dependencias
+npm install
+
+## Iniciar projeto prisma + nest
 npm run setup
 
 ## Rodar o projeto
