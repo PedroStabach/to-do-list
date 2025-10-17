@@ -1,15 +1,15 @@
 import "./App.css";
 import { Account } from "./Components/Account";
 import { Task } from "./Components/Tasks";
+import { Register } from "./Components/Register";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { PrivateRoute } from "./Routes/PrivateRoute";
-import { Register } from "./Components/Register";
 
 function App() {
   return (
     <Router>
       <Routes>
-        {/* rota protegida */}
+        {/* Rota protegida */}
         <Route
           path="/"
           element={
@@ -19,9 +19,9 @@ function App() {
           }
         />
 
-        {/* rota pública */}
+        {/* Rotas públicas */}
         <Route path="/login" element={<Account />} />
-        <Route path="/Register" element={<Register />} />
+        <Route path="/register" element={<Register />} />
       </Routes>
     </Router>
   );

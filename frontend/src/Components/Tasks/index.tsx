@@ -34,6 +34,8 @@ export function Task() {
   }
 
   useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (!token) return;
     fetchTasks();
   }, []);
 
