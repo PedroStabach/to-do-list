@@ -1,0 +1,147 @@
+.wrapper {
+  position: fixed;
+  top: 0; 
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow-y: auto; /* ✅ permite rolar */
+  display: flex;
+  justify-content: center;
+  align-items: flex-start; /* ✅ começa no topo, rola se for grande */
+  text-align: start;
+  z-index: 1004;
+  pointer-events: auto;
+  box-sizing: border-box;
+
+  background: rgba(0, 0, 0, 0.35); /* ✅ blur + escurecido */
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+
+  padding: 40px 0; /* espaço acima e abaixo do form */
+}
+
+.form {
+  background-color: #101115;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  width: 350px;
+  max-width: calc(100% - 40px);
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  position: relative;
+  z-index: 1001;
+  margin: 60px 0; /* ✅ espaçamento pra não grudar no topo/fundo */
+  box-sizing: border-box;
+}
+
+.form label {
+  text-align: start;
+  width: 100%;
+  color: #fff;
+}
+
+.title {
+  width: 100%;
+  text-align: center;
+  margin: 0;
+  font-size: 1.5rem;
+  color: #fff;
+}
+
+input,
+select,
+textarea , 
+.trashButton{
+  width: 100%;
+  height: 40px;
+  background-color: #393939;
+  font-size: 1rem;
+  border-radius: 3px;
+  padding: 5px;
+  border: none;
+  position: relative;
+  resize: vertical;
+  box-sizing: border-box;
+  color: #fff;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  outline: 2px solid #2d8cff;
+  outline-offset: 2px;
+}
+
+.wrapper button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  color: #fff;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.2s;
+  background-color: #2d8cff;
+  margin-top: 30px;
+  width: 100%;
+}
+
+.wrapper button:hover {
+  background-color: #2473d6;
+}
+
+.closeButton {
+  position: absolute;
+  top: 20px;
+  left: 15px;
+  background: transparent;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  padding: 6px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1005;
+}
+.trashButton {
+  border: 1px solid #2473d6;
+  background-color: #101115;
+  height: 50px;
+  cursor: pointer;
+}
+.error {
+  color: red;
+  text-align: center;
+  font-weight: bold;
+}
+
+@media (max-width: 400px) {
+  .wrapper {
+    align-items: flex-start;
+    padding: 20px 0;
+  }
+
+  .form {
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
+    border-radius: 0;
+    box-shadow: none;
+    padding: 20px;
+  }
+
+  .closeButton {
+    top: 15px;
+    left: 15px;
+  }
+
+  .title {
+    font-size: 1.3rem;
+  }
+}

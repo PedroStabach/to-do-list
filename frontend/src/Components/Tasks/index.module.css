@@ -1,0 +1,33 @@
+.newTask {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    margin-right: 20px;
+    margin-bottom: 20px;
+    width: 30px;
+    height: 30px;
+    padding: 5px;
+    border-radius: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #646cff;
+    font-size: 2em;
+    cursor: pointer;
+    z-index: 1003;
+}
+.newTask:hover {
+    background-color: #373fd2;
+}
+.tasks {
+  position: absolute;
+  top: var(--header-height, 80px); /* espaço do header */
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  background-color: #0f1116; /* cor de fundo opcional */
+  overflow-y: auto;
+  box-sizing: border-box;
+  padding: 20px;
+}
