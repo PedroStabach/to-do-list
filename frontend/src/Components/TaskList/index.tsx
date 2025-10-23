@@ -61,7 +61,7 @@ export function TaskList() {
         filtered = data.filter((t) => t.status === "concluido");
       else if (filter === "andamento")
         filtered = data.filter(
-          (t) => t.status !== "concluido" && t.status !== "vencido",
+          (t) => t.status !== "concluido" && t.status !== "vencido"
         );
       else if (filter === "vencido")
         filtered = data.filter((t) => t.status === "vencido");
@@ -74,7 +74,6 @@ export function TaskList() {
     }
   }
 
-  // concluir tarefa (atualiza backend e recarrega mantendo filtro)
   async function handleConcluir(id: number) {
     try {
       const token = localStorage.getItem("token");
@@ -100,22 +99,19 @@ export function TaskList() {
     }
   }
 
-  // abrir modal de edição
   function handleOpenUpdate(task: Task) {
     setSelectedTask(task);
     setShowUpdateTask(true);
   }
 
-  // fechar modal e recarregar lista
   function handleCloseUpdate() {
     setShowUpdateTask(false);
     setSelectedTask(null);
     loadTasks();
   }
 
-  // trocar filtro e recarregar
   function handleFilterChange(
-    next: "todas" | "concluido" | "andamento" | "vencido",
+    next: "todas" | "concluido" | "andamento" | "vencido"
   ) {
     setFilter(next);
   }
@@ -123,7 +119,7 @@ export function TaskList() {
   useEffect(() => {
     loadTasks();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [filter]); // recarrega quando o filtro mudar
+  }, [filter]);
 
   return (
     <div className={styles.taskListWrapper}>
@@ -164,7 +160,6 @@ export function TaskList() {
             <li key={task.id} className={styles.taskItem}>
               <div className={styles.taskHeader}>
                 <h3>{task.titulo}</h3>
-
                 <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
                   {task.status !== "concluido" && task.status !== "vencido" && (
                     <FiCheck
@@ -174,7 +169,6 @@ export function TaskList() {
                       onClick={() => handleConcluir(task.id)}
                     />
                   )}
-
                   <span
                     className={styles.status}
                     style={{
@@ -182,13 +176,12 @@ export function TaskList() {
                         task.status === "concluido"
                           ? "green"
                           : task.status === "vencido"
-                            ? "red"
-                            : "orange",
+                          ? "red"
+                          : "orange",
                     }}
                   >
                     {task.status}
                   </span>
-
                   <FaPencilAlt
                     size={16}
                     color="#2d8cff"
